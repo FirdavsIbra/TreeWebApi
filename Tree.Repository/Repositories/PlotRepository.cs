@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Tree.DBCodeFirst.DbContexts;
 using Tree.DBCodeFirst.Entities;
-using Microsoft.EntityFrameworkCore;
 using Tree.Domain.ModelInterfaces;
-using Tree.Domain.ModelInterfaces.Base;
 using Tree.Domain.RepositoryInterfaces;
 using Tree.Repository.BusinessModels;
 
@@ -63,12 +62,15 @@ namespace Tree.Repository.Repositories
         /// <summary>
         /// Update plot.
         /// </summary>
-        public async Task UpdateAsync(IPlot plot)
+        public async Task UpdateAsync(long id, IPlot plot)
         {
-            _dbContext.Plots.Update(_mapper.Map<PlotDb>(plot));
+            var plotDb = await _dbContext.Plots.FirstOrDefaultAsync(x => x.Id == id);
+            if (plotDb is null)
+                throw new Exception("Tree not found!");
+
+            _dbContext.Plots.Update(_mapper.Map(plot, plotDb));
 
             await _dbContext.SaveChangesAsync();
         }
-
     }
 }

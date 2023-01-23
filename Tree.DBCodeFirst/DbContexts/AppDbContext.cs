@@ -19,5 +19,13 @@ namespace Tree.DBCodeFirst.DbContexts
         /// Table of plots.
         /// </summary>
         public virtual DbSet<PlotDb> Plots { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TreeDb>()
+                .HasOne(t => t.Plot)
+                .WithMany(p => p.Trees)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

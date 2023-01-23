@@ -22,7 +22,7 @@ namespace Tree.Domain.RepositoryInterfaces
         /// <summary>
         /// Update plot.
         /// </summary>
-        public Task UpdateAsync(IPlot tree);
+        public Task UpdateAsync(long id, IPlot tree);
 
         /// <summary>
         /// Get all plots.

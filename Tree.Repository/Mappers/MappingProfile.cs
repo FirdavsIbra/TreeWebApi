@@ -10,9 +10,11 @@ namespace Tree.Repository.Mappers
     {
         public MappingProfile()
         {
+            // Configuration of tree mapping.
             CreateMap<ITree, TreeDb>();
             CreateMap<TreeDb, BusinessModels.Tree>();
 
+            // Configuration of plot mapping.
             CreateMap<IPlot, PlotDb>();
             CreateMap<PlotDb, Plot>();
         }

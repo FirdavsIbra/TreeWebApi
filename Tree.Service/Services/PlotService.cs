@@ -14,14 +14,44 @@ namespace Tree.Service.Services
             _treeRepository = treeRepository;
         }
 
+        /// <summary>
+        /// Add plot.
+        /// </summary>
         public async Task AddAsync(IPlot plot)
         {
             await _plotRepository.AddAsync(plot);
         }
 
+        /// <summary>
+        /// Delete plot.
+        /// </summary>
+        public async Task DeleteAsync(long id)
+        {
+            var plot = await _plotRepository.GetByIdAsync(id);
+            if (plot == null)
+                throw new Exception("Plot not found!");
+
+            await _plotRepository.DeleteAsync(id);
+        }
+
+        /// <summary>
+        /// Get all plots.
+        /// </summary>
         public async Task<IPlot[]> GetAllAsync()
         {
             return await _plotRepository.GetAllAsync();
+        }
+
+        /// <summary>
+        /// Update plot.
+        /// </summary>
+        public async Task UpdateAsync(IPlot plotDto)
+        {
+            var plot = await _plotRepository.GetByIdAsync(plotDto.Id);
+            if (plot == null) 
+                throw new Exception("Plot not found!");
+            
+            await _plotRepository.UpdateAsync(plotDto.Id, plotDto);
         }
     }
 }

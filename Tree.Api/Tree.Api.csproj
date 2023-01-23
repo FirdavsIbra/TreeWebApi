@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tree.DatabaseFirst\Tree.DatabaseFirst.csproj" />
     <ProjectReference Include="..\Tree.DBCodeFirst\Tree.DBCodeFirst.csproj" />
     <ProjectReference Include="..\Tree.DBCodeFirst\Tree.DBCodeFirst.csproj" />
     <ProjectReference Include="..\Tree.Repository\Tree.Repository.csproj" />

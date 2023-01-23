@@ -2,7 +2,7 @@
 
 namespace Tree.Service.DTOs
 {
-    public class PlotDto : IPlot
+    public sealed class PlotDto : IPlot
     {
         /// <summary>
         /// Gets or sets id of plot.

@@ -13,5 +13,15 @@ namespace Tree.Domain.ServiceInterfaces
         /// Add plot.
         /// </summary>
         public Task AddAsync(IPlot plot);
+
+        /// <summary>
+        /// Delete plot.
+        /// </summary>
+        public Task DeleteAsync(long id);
+
+        /// <summary>
+        /// Update plot.
+        /// </summary>
+        public Task UpdateAsync(IPlot plot);
     }
 }

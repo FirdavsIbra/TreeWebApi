@@ -18,7 +18,7 @@ namespace Tree.Api.Controllers
         /// Add plot.
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> AddAsync(PlotDto plotDto)
+        public async Task<IActionResult> AddAsync([FromQuery] PlotDto plotDto)
         {
             await _plotService.AddAsync(plotDto);
             return Ok();
@@ -31,6 +31,23 @@ namespace Tree.Api.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             return Ok(await _plotService.GetAllAsync());
+        }
+
+        /// <summary>
+        /// Delete tree.
+        /// </summary>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync([FromQuery] long id)
+        {
+            await _plotService.DeleteAsync(id);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromQuery] PlotDto plotDto)
+        {
+            await _plotService.UpdateAsync(plotDto);
+            return Ok();
         }
     }
 }

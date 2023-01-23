@@ -34,5 +34,20 @@ namespace Tree.Domain.RepositoryInterfaces
         /// Get tree by sort.
         /// </summary>
         public Task<ITree> GetBySortAsync(SortsOfTree sort);
+
+        /// <summary>
+        /// Get average height of tree.
+        /// </summary>
+        public Task<double> GetAverageHeightAsync(long plotId);
+
+        /// <summary>
+        /// Get maximum year of the harvest.
+        /// </summary>
+        public Task<double> GetMaximumYearOfTheHarvestAsync(long plotId);
+
+        /// <summary>
+        /// Get total occupying area of the tree.
+        /// </summary>
+        public Task<double> GetTotalOccupyingAreaAsync(long plotId);
     }
 }

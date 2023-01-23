@@ -83,5 +83,44 @@ namespace Tree.Repository.Repositories
 
             return _mapper.Map<BusinessModels.Tree>(sortOfTree);
         }
+
+        /// <summary>
+        /// Get average height of tree.
+        /// </summary>
+        public async Task<double> GetAverageHeightAsync(long plotId)
+        {
+            var trees = _dbContext.Trees.Where(t => t.PlotId == plotId);
+
+            if (!trees.Any())
+                return 0;
+
+            return await trees.AverageAsync(t => t.HeightInMetre);
+        }
+
+        /// <summary>
+        /// Get maximum year of the harvest.
+        /// </summary>
+        public async Task<double> GetMaximumYearOfTheHarvestAsync(long plotId)
+        {
+            var trees = _dbContext.Trees.Where(t => t.PlotId == plotId);
+
+            if (!trees.Any())
+                return 0;
+
+            return await trees.MaxAsync(t => t.BeginingOfTheHarvestInY);
+        }
+
+        /// <summary>
+        /// Get total occupying area of the tree.
+        /// </summary>
+        public async Task<double> GetTotalOccupyingAreaAsync(long plotId)
+        {
+            var trees = _dbContext.Trees.Where(t => t.PlotId == plotId);
+
+            if (!trees.Any())
+                return 0;
+
+            return await trees.SumAsync(t => t.Square);
+        }
     }
 }

@@ -35,12 +35,12 @@ namespace Tree.Domain.ModelInterfaces.Base
         public double BeginingOfTheHarvestInY { get; }
 
         /// <summary>
-        /// Gets count of tree. 
+        /// Gets or sets count of tree. 
         /// </summary>
         public long Count { get; set; }
 
         /// <summary>
-        /// Gets count of plot.
+        /// Gets or sets count of plot.
         /// </summary>
         public long PlotId { get; set; }
     }
