@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tree.Api", "Tree.Api\Tree.Api.csproj", "{98711671-D6C4-42D0-BA10-23A177EAFCCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tree.Domain", "Tree.Domain\Tree.Domain.csproj", "{7926D24E-7939-4AB9-B016-B9F5EB2713B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tree.Repository", "Tree.Repository\Tree.Repository.csproj", "{2319E587-EBC5-4B1E-98CA-05821724E008}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tree.Service", "Tree.Service\Tree.Service.csproj", "{4C6B9B7C-74BC-4600-9405-60DCD7DF7AB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tree.DatabaseFirst", "Tree.DatabaseFirst\Tree.DatabaseFirst.csproj", "{2F68135C-72EC-420F-B2B4-E4691F26B30C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tree.DBCodeFirst", "Tree.DBCodeFirst\Tree.DBCodeFirst.csproj", "{62DD3DE5-5D2C-4904-8F8C-5EA9E103578D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98711671-D6C4-42D0-BA10-23A177EAFCCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98711671-D6C4-42D0-BA10-23A177EAFCCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98711671-D6C4-42D0-BA10-23A177EAFCCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98711671-D6C4-42D0-BA10-23A177EAFCCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7926D24E-7939-4AB9-B016-B9F5EB2713B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7926D24E-7939-4AB9-B016-B9F5EB2713B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7926D24E-7939-4AB9-B016-B9F5EB2713B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7926D24E-7939-4AB9-B016-B9F5EB2713B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2319E587-EBC5-4B1E-98CA-05821724E008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2319E587-EBC5-4B1E-98CA-05821724E008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2319E587-EBC5-4B1E-98CA-05821724E008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2319E587-EBC5-4B1E-98CA-05821724E008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C6B9B7C-74BC-4600-9405-60DCD7DF7AB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C6B9B7C-74BC-4600-9405-60DCD7DF7AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C6B9B7C-74BC-4600-9405-60DCD7DF7AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C6B9B7C-74BC-4600-9405-60DCD7DF7AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F68135C-72EC-420F-B2B4-E4691F26B30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F68135C-72EC-420F-B2B4-E4691F26B30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F68135C-72EC-420F-B2B4-E4691F26B30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F68135C-72EC-420F-B2B4-E4691F26B30C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62DD3DE5-5D2C-4904-8F8C-5EA9E103578D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62DD3DE5-5D2C-4904-8F8C-5EA9E103578D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62DD3DE5-5D2C-4904-8F8C-5EA9E103578D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62DD3DE5-5D2C-4904-8F8C-5EA9E103578D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDF19FD2-5079-41E4-AE69-D92D9752A7E9}
+	EndGlobalSection
+EndGlobal
