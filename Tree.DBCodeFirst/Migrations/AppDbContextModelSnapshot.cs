@@ -51,12 +51,11 @@ namespace Tree.DBCodeFirst.Migrations
                     b.Property<long>("TreeSortId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("TreeTypeId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlotId");
+
+                    b.HasIndex("TreeSortId");
 
                     b.ToTable("Trees");
                 });
@@ -117,7 +116,15 @@ namespace Tree.DBCodeFirst.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tree.DBCodeFirst.Entities.TreeSortDb", "TreeSort")
+                        .WithMany()
+                        .HasForeignKey("TreeSortId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Plot");
+
+                    b.Navigation("TreeSort");
                 });
 
             modelBuilder.Entity("Tree.DBCodeFirst.Entities.TreeSortDb", b =>

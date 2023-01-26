@@ -12,7 +12,7 @@ namespace Tree.Domain.ServiceInterfaces
         /// <summary>
         /// Add plot.
         /// </summary>
-        public Task AddAsync(IPlot plot);
+        public Task AddAsync(double capacity);
 
         /// <summary>
         /// Delete plot.

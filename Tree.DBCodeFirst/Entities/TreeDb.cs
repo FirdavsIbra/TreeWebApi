@@ -14,12 +14,6 @@
         public TreeSortDb TreeSort { get; set; }
 
         /// <summary>
-        /// Gets or sets id of tree type.
-        /// </summary>
-        public long TreeTypeId { get; set; }
-        public TreeTypeDb TreeType { get; set; }
-
-        /// <summary>
         /// Gets or sets id of plot.
         /// </summary>
         public long PlotId { get; set; }

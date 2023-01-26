@@ -18,9 +18,9 @@ namespace Tree.Api.Controllers
         /// Add plot.
         /// </summary>
         [HttpPost("add")]
-        public async Task<IActionResult> AddAsync([FromQuery] PlotDto plotDto)
+        public async Task<IActionResult> AddAsync([FromQuery] double capacity)
         {
-            await _plotService.AddAsync(plotDto);
+            await _plotService.AddAsync(capacity);
             return Ok();
         }
 

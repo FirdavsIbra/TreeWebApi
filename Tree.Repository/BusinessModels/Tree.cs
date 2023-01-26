@@ -15,11 +15,6 @@ namespace Tree.Repository.BusinessModels
         public long TreeSortId { get; internal set; }
 
         /// <summary>
-        /// Gets or sets type of tree.
-        /// </summary>
-        public long TreeTypeId { get; internal set; }
-
-        /// <summary>
         /// Gets or sets height of tree in metre.
         /// </summary>
         public double HeightInMetre { get; internal set; }

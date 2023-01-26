@@ -13,11 +13,6 @@
         public long TreeSortId { get; }
 
         /// <summary>
-        /// Gets id of tree type.
-        /// </summary>
-        public long TreeTypeId { get; }
-
-        /// <summary>
         /// Gets or sets id of plot.
         /// </summary>
         public long PlotId { get; set; }

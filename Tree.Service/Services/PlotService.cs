@@ -1,6 +1,7 @@
 ﻿using Tree.Domain.ModelInterfaces;
 using Tree.Domain.RepositoryInterfaces;
 using Tree.Domain.ServiceInterfaces;
+using Tree.Service.DTOs;
 
 namespace Tree.Service.Services
 {
@@ -17,8 +18,12 @@ namespace Tree.Service.Services
         /// <summary>
         /// Add plot.
         /// </summary>
-        public async Task AddAsync(IPlot plot)
+        public async Task AddAsync(double capacity)
         {
+            var plot = new PlotDto()
+            {
+                Capacity = capacity
+            };
             await _plotRepository.AddAsync(plot);
         }
 

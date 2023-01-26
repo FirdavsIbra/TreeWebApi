@@ -108,9 +108,8 @@ namespace Tree.Repository.Repositories
 
             if (!trees.Any())
                 return 0;
-            return 0;
 
-            //return await trees.AverageAsync(t => t.HeightInMetre);
+            return await trees.AverageAsync(t => t.TreeSort.HeightInMetre);
         }
 
         /// <summary>
@@ -124,8 +123,8 @@ namespace Tree.Repository.Repositories
 
             if (!trees.Any())
                 return 0;
-            return 0;
-            //return await trees.MaxAsync(t => t.BeginingOfTheHarvestInY);
+            
+            return await trees.MaxAsync(t => t.TreeSort.BeginingOfTheHarvestInY);
         }
 
         /// <summary>
@@ -139,8 +138,8 @@ namespace Tree.Repository.Repositories
 
             if (!trees.Any())
                 return 0;
-            return 0;
-            //return await trees.SumAsync(t => t.Square);
+            
+            return await trees.SumAsync(t => t.TreeSort.Square);
         }
     }
 }

@@ -35,9 +35,12 @@ namespace Tree.Service.Services
 
             for (int index = 0; index < count; index++)
             {
-                var tree = new TreeDto();
-                tree.TreeTypeId = treeSort.TreeTypeId;
-                tree.PlotId = plotId;
+                var tree = new TreeDto()
+                {
+                    TreeSortId = sortId,
+                    PlotId = plotId,
+                };
+
                 trees.Add(tree);
             }
             
@@ -71,9 +74,8 @@ namespace Tree.Service.Services
         {
             var plot = await _plotRepository.GetByIdAsync(plotId);
             if (plot == null)
-            {
                 throw new Exception("Plot not found");
-            }
+            
             var maxYearOfHarvestTask = _treeRepository.GetMaximumYearOfTheHarvestAsync(plotId);
             var maxHeightTask = _treeRepository.GetAverageHeightAsync(plotId);
             var totalAreaTask = _treeRepository.GetTotalOccupyingAreaAsync(plotId);
