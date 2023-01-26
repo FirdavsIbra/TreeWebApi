@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Tree.DatabaseFirst.Models;
+﻿namespace Tree.DatabaseFirst.Models;
 
 public partial class Tree
 {

@@ -43,7 +43,7 @@ namespace Tree.Service.Services
 
                 trees.Add(tree);
             }
-            
+
             await _treeRepository.AddRangeAsync(trees);
         }
 
@@ -75,11 +75,11 @@ namespace Tree.Service.Services
             var plot = await _plotRepository.GetByIdAsync(plotId);
             if (plot == null)
                 throw new Exception("Plot not found");
-            
+
             var maxYearOfHarvestTask = _treeRepository.GetMaximumYearOfTheHarvestAsync(plotId);
             var maxHeightTask = _treeRepository.GetAverageHeightAsync(plotId);
             var totalAreaTask = _treeRepository.GetTotalOccupyingAreaAsync(plotId);
-            
+
             await Task.WhenAll(maxHeightTask, totalAreaTask, maxYearOfHarvestTask);
 
             return new TreeCalculation()

@@ -18,7 +18,7 @@ namespace Tree.Service.Services
             {
                 Name = name,
             };
-            
+
             await _treeTypeRepository.AddAsync(treeType);
         }
 

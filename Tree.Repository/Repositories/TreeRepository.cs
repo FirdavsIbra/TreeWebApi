@@ -17,7 +17,7 @@ namespace Tree.Repository.Repositories
             _mapper = mapper;
             _treeSortRepository = treeSortRepository;
         }
-        
+
         /// <summary>
         /// Add tree.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Tree.Repository.Repositories
             await using var dbContext = new AppDbContext();
 
             var tree = await dbContext.Trees.FirstOrDefaultAsync(x => x.Id == id);
-      
+
             return _mapper.Map<BusinessModels.Tree>(tree);
         }
 
@@ -89,9 +89,9 @@ namespace Tree.Repository.Repositories
 
             var treeDb = await dbContext.Trees.FirstOrDefaultAsync(x => x.Id == tree.Id);
 
-            if(treeDb is null)
+            if (treeDb is null)
                 throw new Exception("Tree not found!");
-            
+
             dbContext.Trees.Update(_mapper.Map(tree, treeDb));
 
             await dbContext.SaveChangesAsync();
@@ -123,7 +123,7 @@ namespace Tree.Repository.Repositories
 
             if (!trees.Any())
                 return 0;
-            
+
             return await trees.MaxAsync(t => t.TreeSort.BeginingOfTheHarvestInY);
         }
 
@@ -138,7 +138,7 @@ namespace Tree.Repository.Repositories
 
             if (!trees.Any())
                 return 0;
-            
+
             return await trees.SumAsync(t => t.TreeSort.Square);
         }
     }

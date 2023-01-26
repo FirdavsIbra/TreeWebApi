@@ -28,7 +28,7 @@ namespace Tree.Repository.BusinessModels
         /// Gets or sets begining year of the harvest.
         /// </summary>
         public double BeginingOfTheHarvestInY { get; internal set; }
-        
+
         /// <summary>
         /// Gets or sets plot of tree.
         /// </summary>

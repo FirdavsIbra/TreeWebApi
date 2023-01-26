@@ -1,5 +1,4 @@
-﻿using Tree.Domain.Enums;
-using Tree.Domain.ModelInterfaces.Base;
+﻿using Tree.Domain.ModelInterfaces.Base;
 
 namespace Tree.Domain.RepositoryInterfaces
 {

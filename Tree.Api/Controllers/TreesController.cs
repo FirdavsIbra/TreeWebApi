@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Tree.Domain.Enums;
 using Tree.Domain.ServiceInterfaces;
 
 namespace Tree.Api.Controllers

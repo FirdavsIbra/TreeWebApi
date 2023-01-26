@@ -15,7 +15,7 @@ namespace Tree.Repository.Repositories
         {
             _mapper = mapper;
         }
-        
+
         /// <summary>
         /// Add plot.
         /// </summary>

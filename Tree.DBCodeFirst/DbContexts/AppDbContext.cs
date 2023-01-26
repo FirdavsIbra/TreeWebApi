@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Configuration;
 using Tree.DBCodeFirst.Entities;
 
 namespace Tree.DBCodeFirst.DbContexts
@@ -15,7 +14,7 @@ namespace Tree.DBCodeFirst.DbContexts
         {
 
         }
-        
+
         /// <summary>
         /// Table of trees.
         /// </summary>

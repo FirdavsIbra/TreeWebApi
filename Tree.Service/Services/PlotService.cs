@@ -53,9 +53,9 @@ namespace Tree.Service.Services
         public async Task UpdateAsync(IPlot plotDto)
         {
             var plot = await _plotRepository.GetByIdAsync(plotDto.Id);
-            if (plot == null) 
+            if (plot == null)
                 throw new Exception("Plot not found!");
-            
+
             await _plotRepository.UpdateAsync(plotDto);
         }
     }
