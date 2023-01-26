@@ -1,6 +1,4 @@
-﻿using Tree.Domain.Enums;
-
-namespace Tree.Domain.ModelInterfaces.Base
+﻿namespace Tree.Domain.ModelInterfaces.Base
 {
     public interface ITree
     {
@@ -10,37 +8,17 @@ namespace Tree.Domain.ModelInterfaces.Base
         public long Id { get; }
 
         /// <summary>
-        /// Gets sort of tree.
+        /// Gets id of sort tree.
         /// </summary>
-        public SortsOfTree Sort { get; }
+        public long TreeSortId { get; }
 
         /// <summary>
-        /// Gets type of tree.
+        /// Gets id of tree type.
         /// </summary>
-        public TypesOfTree Type { get; }
+        public long TreeTypeId { get; }
 
         /// <summary>
-        /// Gets height of tree in metre.
-        /// </summary>
-        public double HeightInMetre { get; }
-
-        /// <summary>
-        /// Gets ocupying area of the tree.
-        /// </summary>
-        public double Square { get; }
-
-        /// <summary>
-        /// Gets begining year of the harvest.
-        /// </summary>
-        public double BeginingOfTheHarvestInY { get; }
-
-        /// <summary>
-        /// Gets or sets count of tree. 
-        /// </summary>
-        public long Count { get; set; }
-
-        /// <summary>
-        /// Gets or sets count of plot.
+        /// Gets or sets id of plot.
         /// </summary>
         public long PlotId { get; set; }
     }

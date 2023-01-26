@@ -1,6 +1,6 @@
 ﻿namespace Tree.DBCodeFirst.Entities
 {
-    public sealed class PlotDb
+    public class PlotDb
     {
         /// <summary>
         /// Gets or sets id of plot.
@@ -15,6 +15,6 @@
         /// <summary>
         /// Gets or sets trees.
         /// </summary>
-        public ICollection<TreeDb> Trees { get; set; }
+        public virtual ICollection<TreeDb> Trees { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tree.DBCodeFirst.DbContexts;
 
@@ -10,9 +11,11 @@ using Tree.DBCodeFirst.DbContexts;
 namespace Tree.DBCodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230126052644_TypesAndSortsMigration")]
+    partial class TypesAndSortsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,68 +48,29 @@ namespace Tree.DBCodeFirst.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("PlotId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TreeSortId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TreeTypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlotId");
-
-                    b.ToTable("Trees");
-                });
-
-            modelBuilder.Entity("Tree.DBCodeFirst.Entities.TreeSortDb", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
                     b.Property<double>("BeginingOfTheHarvestInY")
                         .HasColumnType("float");
 
                     b.Property<double>("HeightInMetre")
                         .HasColumnType("float");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("PlotId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
 
                     b.Property<double>("Square")
                         .HasColumnType("float");
 
-                    b.Property<long>("TreeTypeId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TreeTypeId");
+                    b.HasIndex("PlotId");
 
-                    b.ToTable("TreeSorts");
-                });
-
-            modelBuilder.Entity("Tree.DBCodeFirst.Entities.TreeTypeDb", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TreeTypes");
+                    b.ToTable("Trees");
                 });
 
             modelBuilder.Entity("Tree.DBCodeFirst.Entities.TreeDb", b =>
@@ -120,25 +84,9 @@ namespace Tree.DBCodeFirst.Migrations
                     b.Navigation("Plot");
                 });
 
-            modelBuilder.Entity("Tree.DBCodeFirst.Entities.TreeSortDb", b =>
-                {
-                    b.HasOne("Tree.DBCodeFirst.Entities.TreeTypeDb", "TreeType")
-                        .WithMany("TreeSorts")
-                        .HasForeignKey("TreeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TreeType");
-                });
-
             modelBuilder.Entity("Tree.DBCodeFirst.Entities.PlotDb", b =>
                 {
                     b.Navigation("Trees");
-                });
-
-            modelBuilder.Entity("Tree.DBCodeFirst.Entities.TreeTypeDb", b =>
-                {
-                    b.Navigation("TreeSorts");
                 });
 #pragma warning restore 612, 618
         }

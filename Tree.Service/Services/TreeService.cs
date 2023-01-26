@@ -1,10 +1,8 @@
-﻿using Tree.Domain.Enums;
-using Tree.Domain.ModelInterfaces;
+﻿using Tree.Domain.ModelInterfaces;
 using Tree.Domain.ModelInterfaces.Base;
 using Tree.Domain.RepositoryInterfaces;
 using Tree.Domain.ServiceInterfaces;
 using Tree.Service.DTOs;
-using Tree.Service.Models;
 
 namespace Tree.Service.Services
 {
@@ -12,56 +10,50 @@ namespace Tree.Service.Services
     {
         private readonly IPlotRepository _plotRepository;
         private readonly ITreeRepository _treeRepository;
-        public TreeService(ITreeRepository treeRepository, IPlotRepository plotRepository)
+        private readonly ITreeSortRepository _treeSortRepository;
+        public TreeService(ITreeRepository treeRepository, IPlotRepository plotRepository, ITreeSortRepository treeSortRepository)
         {
             _treeRepository = treeRepository;
             _plotRepository = plotRepository;
+            _treeSortRepository = treeSortRepository;
         }
 
         /// <summary>
         /// Add tree.
         /// </summary>
-        public async Task AddTreeAsync(SortsOfTree sortsOfTree, long count, long plotId)
+        public async Task AddTreeAsync(long sortId, long count, long plotId)
         {
             var plot = await _plotRepository.GetByIdAsync(plotId);
             if (plot is null)
                 throw new Exception("Plot not found!");
 
-            var sort = await _treeRepository.GetBySortAsync(sortsOfTree);
-            if (sort == null) 
-            {
-                var tree = TreeFactory(sortsOfTree);
-                tree.Count = count;
-                tree.PlotId = plotId;
+            var treeSort = await _treeSortRepository.GetByIdAsync(sortId);
+            if (treeSort is null)
+                throw new Exception("Sort not found");
 
-                await _treeRepository.AddAsync(tree);
-            }
-            else
+            IList<ITree> trees = new List<ITree>();
+
+            for (int index = 0; index < count; index++)
             {
-                sort.Count += count;
-                await _treeRepository.UpdateAsync(sort.Id, sort);
+                var tree = new TreeDto();
+                tree.TreeTypeId = treeSort.TreeTypeId;
+                tree.PlotId = plotId;
+                trees.Add(tree);
             }
+            
+            await _treeRepository.AddRangeAsync(trees);
         }
 
         /// <summary>
         /// Delete tree.
         /// </summary>
-        public async Task DeleteAsync(long count, long plotId, SortsOfTree sort)
+        public async Task DeleteAsync(long treeId, long plotId)
         {
             var plot = await _plotRepository.GetByIdAsync(plotId);
             if (plot == null)
                 throw new Exception("Plot not found!");
 
-            var tree = await _treeRepository.GetBySortAsync(sort);
-            if (tree == null)
-                throw new Exception("Sort not found!");
-
-            if ((tree.Count -= count) < 0)
-                throw new Exception("Too many count of trees to delete!");
-
-            tree.Count -= count;
-
-            await _treeRepository.UpdateAsync(tree.Id, tree);
+            await _treeRepository.DeleteAsync(treeId);
         }
 
         /// <summary>
@@ -82,28 +74,17 @@ namespace Tree.Service.Services
             {
                 throw new Exception("Plot not found");
             }
+            var maxYearOfHarvestTask = _treeRepository.GetMaximumYearOfTheHarvestAsync(plotId);
+            var maxHeightTask = _treeRepository.GetAverageHeightAsync(plotId);
+            var totalAreaTask = _treeRepository.GetTotalOccupyingAreaAsync(plotId);
+            
+            await Task.WhenAll(maxHeightTask, totalAreaTask, maxYearOfHarvestTask);
 
-            return new TreeCalculation
+            return new TreeCalculation()
             {
-                Year = await _treeRepository.GetMaximumYearOfTheHarvestAsync(plotId),
-                MaxHeight = await _treeRepository.GetAverageHeightAsync(plotId),
-                TotalArea = await _treeRepository.GetTotalOccupyingAreaAsync(plotId)
-            };
-        }
-
-        private ITree TreeFactory(SortsOfTree sortOfTree)
-        {
-            return sortOfTree switch
-            {
-                SortsOfTree.Golden => new Golden(),
-                SortsOfTree.PinkLady => new PinkLady(),
-                SortsOfTree.Semerenko => new Semerenko(),
-                SortsOfTree.GrannySmith => new GrannySmith(),
-                SortsOfTree.Saltanat => new Saltanat(),
-                SortsOfTree.Kishmish => new Kishmish(),
-                SortsOfTree.Xusein => new Xusein(),
-                SortsOfTree.Gvidon => new Gvidon(),
-                _ => throw new ArgumentException("Sort not found!"),
+                Year = maxYearOfHarvestTask.Result,
+                MaxHeight = maxHeightTask.Result,
+                TotalArea = totalAreaTask.Result,
             };
         }
     }

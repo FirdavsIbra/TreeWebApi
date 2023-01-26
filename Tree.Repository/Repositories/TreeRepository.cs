@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Tree.DBCodeFirst.DbContexts;
 using Tree.DBCodeFirst.Entities;
-using Tree.Domain.Enums;
 using Tree.Domain.ModelInterfaces.Base;
 using Tree.Domain.RepositoryInterfaces;
 
@@ -10,12 +10,12 @@ namespace Tree.Repository.Repositories
 {
     public sealed class TreeRepository : ITreeRepository
     {
-        private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
-        public TreeRepository(AppDbContext dbContext, IMapper mapper)
+        private readonly ITreeSortRepository _treeSortRepository;
+        public TreeRepository(IMapper mapper, ITreeSortRepository treeSortRepository)
         {
-            _dbContext = dbContext;
             _mapper = mapper;
+            _treeSortRepository = treeSortRepository;
         }
         
         /// <summary>
@@ -23,8 +23,21 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task AddAsync(ITree tree)
         {
-            await _dbContext.Trees.AddAsync(_mapper.Map<TreeDb>(tree));
-            await _dbContext.SaveChangesAsync();
+            await using var dbContext = new AppDbContext();
+            await dbContext.Trees.AddAsync(_mapper.Map<TreeDb>(tree));
+            await dbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Add pupil array.
+        /// </summary>
+        public async Task AddRangeAsync(IEnumerable<ITree> pupils)
+        {
+            await using var dbContext = new AppDbContext();
+
+            await dbContext.Trees.AddRangeAsync(pupils.Select(_mapper.Map<TreeDb>));
+
+            await dbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -32,12 +45,14 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task DeleteAsync(long id)
         {
-            var tree = await _dbContext.Trees.FirstOrDefaultAsync(x => x.Id == id);
+            await using var dbContext = new AppDbContext();
+
+            var tree = await dbContext.Trees.FirstOrDefaultAsync(x => x.Id == id);
 
             if (tree is not null)
             {
-                _dbContext.Trees.Remove(tree);
-                await _dbContext.SaveChangesAsync();
+                dbContext.Trees.Remove(tree);
+                await dbContext.SaveChangesAsync();
             }
         }
 
@@ -46,7 +61,11 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task<ITree[]> GetAllAsync()
         {
-            return await _dbContext.Trees.Select(g => _mapper.Map<BusinessModels.Tree>(g)).ToArrayAsync();
+            await using var dbContext = new AppDbContext();
+
+            return await dbContext.Trees.ProjectTo<BusinessModels.Tree>(_mapper.ConfigurationProvider)
+                                        .AsNoTracking()
+                                        .ToArrayAsync();
         }
 
         /// <summary>
@@ -54,7 +73,9 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task<ITree> GetByIdAsync(long id)
         {
-            var tree = await _dbContext.Trees.FirstOrDefaultAsync(x => x.Id == id);
+            await using var dbContext = new AppDbContext();
+
+            var tree = await dbContext.Trees.FirstOrDefaultAsync(x => x.Id == id);
       
             return _mapper.Map<BusinessModels.Tree>(tree);
         }
@@ -62,26 +83,18 @@ namespace Tree.Repository.Repositories
         /// <summary>
         /// Update tree.
         /// </summary>
-        public async Task UpdateAsync(long id, ITree tree)
+        public async Task UpdateAsync(ITree tree)
         {
-            var treeDb = await _dbContext.Trees.FirstOrDefaultAsync(x => x.Id == id);
+            await using var dbContext = new AppDbContext();
+
+            var treeDb = await dbContext.Trees.FirstOrDefaultAsync(x => x.Id == tree.Id);
 
             if(treeDb is null)
                 throw new Exception("Tree not found!");
             
-            _dbContext.Trees.Update(_mapper.Map(tree, treeDb));
+            dbContext.Trees.Update(_mapper.Map(tree, treeDb));
 
-            await _dbContext.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// Get tree by sort.
-        /// </summary>
-        public async Task<ITree> GetBySortAsync(SortsOfTree sort)
-        {
-            var sortOfTree = await _dbContext.Trees.FirstOrDefaultAsync(x => x.Sort == sort);
-
-            return _mapper.Map<BusinessModels.Tree>(sortOfTree);
+            await dbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -89,12 +102,15 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task<double> GetAverageHeightAsync(long plotId)
         {
-            var trees = _dbContext.Trees.Where(t => t.PlotId == plotId);
+            await using var dbContext = new AppDbContext();
+
+            var trees = dbContext.Trees.Where(t => t.PlotId == plotId);
 
             if (!trees.Any())
                 return 0;
+            return 0;
 
-            return await trees.AverageAsync(t => t.HeightInMetre);
+            //return await trees.AverageAsync(t => t.HeightInMetre);
         }
 
         /// <summary>
@@ -102,12 +118,14 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task<double> GetMaximumYearOfTheHarvestAsync(long plotId)
         {
-            var trees = _dbContext.Trees.Where(t => t.PlotId == plotId);
+            await using var dbContext = new AppDbContext();
+
+            var trees = dbContext.Trees.Where(t => t.PlotId == plotId);
 
             if (!trees.Any())
                 return 0;
-
-            return await trees.MaxAsync(t => t.BeginingOfTheHarvestInY);
+            return 0;
+            //return await trees.MaxAsync(t => t.BeginingOfTheHarvestInY);
         }
 
         /// <summary>
@@ -115,12 +133,14 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task<double> GetTotalOccupyingAreaAsync(long plotId)
         {
-            var trees = _dbContext.Trees.Where(t => t.PlotId == plotId);
+            await using var dbContext = new AppDbContext();
+
+            var trees = dbContext.Trees.Where(t => t.PlotId == plotId);
 
             if (!trees.Any())
                 return 0;
-
-            return await trees.SumAsync(t => t.Square);
+            return 0;
+            //return await trees.SumAsync(t => t.Square);
         }
     }
 }

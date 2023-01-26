@@ -51,7 +51,7 @@ namespace Tree.Service.Services
             if (plot == null) 
                 throw new Exception("Plot not found!");
             
-            await _plotRepository.UpdateAsync(plotDto.Id, plotDto);
+            await _plotRepository.UpdateAsync(plotDto);
         }
     }
 }

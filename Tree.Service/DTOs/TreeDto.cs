@@ -1,6 +1,8 @@
-﻿namespace Tree.DBCodeFirst.Entities
+﻿using Tree.Domain.ModelInterfaces.Base;
+
+namespace Tree.Service.DTOs
 {
-    public sealed class TreeDb
+    public sealed class TreeDto : ITree
     {
         /// <summary>
         /// Gets or sets id of tree.
@@ -11,18 +13,15 @@
         /// Gets or sets id of tree sort.
         /// </summary>
         public long TreeSortId { get; set; }
-        public TreeSortDb TreeSort { get; set; }
 
         /// <summary>
         /// Gets or sets id of tree type.
         /// </summary>
         public long TreeTypeId { get; set; }
-        public TreeTypeDb TreeType { get; set; }
 
         /// <summary>
         /// Gets or sets id of plot.
         /// </summary>
         public long PlotId { get; set; }
-        public PlotDb Plot { get; set; }
     }
 }

@@ -17,10 +17,10 @@ namespace Tree.Api.Controllers
         /// <summary>
         /// Add tree.
         /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> AddTreeAsync(long count, SortsOfTree sort, long plotId)
+        [HttpPost("add")]
+        public async Task<IActionResult> AddTreeAsync(long sortId, long count, long plotId)
         {
-            await _treeService.AddTreeAsync(sort, count, plotId);
+            await _treeService.AddTreeAsync(sortId, count, plotId);
             return Ok();
         }
 
@@ -36,7 +36,7 @@ namespace Tree.Api.Controllers
         /// <summary>
         /// Get all trees.
         /// </summary>
-        [HttpGet]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
             return Ok(await _treeService.GetAllAsync());
@@ -45,10 +45,10 @@ namespace Tree.Api.Controllers
         /// <summary>
         /// Delete tree.
         /// </summary>
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAsync(long count, SortsOfTree sort, long plotId)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteAsync(long treeId, long plotId)
         {
-            await _treeService.DeleteAsync(count, plotId, sort);
+            await _treeService.DeleteAsync(treeId, plotId);
             return Ok();
         }
     }

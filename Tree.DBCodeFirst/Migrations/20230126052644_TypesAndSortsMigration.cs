@@ -5,7 +5,7 @@
 namespace Tree.DBCodeFirst.Migrations
 {
     /// <inheritdoc />
-    public partial class TreeMigration : Migration
+    public partial class TypesAndSortsMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,6 @@ namespace Tree.DBCodeFirst.Migrations
                     HeightInMetre = table.Column<double>(type: "float", nullable: false),
                     Square = table.Column<double>(type: "float", nullable: false),
                     BeginingOfTheHarvestInY = table.Column<double>(type: "float", nullable: false),
-                    Count = table.Column<long>(type: "bigint", nullable: false),
                     PlotId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

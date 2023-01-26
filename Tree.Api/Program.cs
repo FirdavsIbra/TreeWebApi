@@ -18,7 +18,11 @@ builder.Services.AddDbContext<AppDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("TreeConnection")));
 builder.Services.AddScoped<ITreeRepository, TreeRepository>();
 builder.Services.AddScoped<IPlotRepository, PlotRepository>();
+builder.Services.AddScoped<ITreeSortRepository, TreeSortRepository>();
+builder.Services.AddScoped<ITreeTypeRepository, TreeTypeRepository>();
 
+builder.Services.AddScoped<ITreeTypeService, TreeTypeService>();
+builder.Services.AddScoped<ITreeSortService, TreeSortService>();
 builder.Services.AddScoped<IPlotService, PlotService>();
 builder.Services.AddScoped<ITreeService, TreeService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));

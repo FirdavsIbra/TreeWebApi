@@ -14,7 +14,7 @@ namespace Tree.Domain.ServiceInterfaces
         /// <summary>
         /// Add tree.
         /// </summary>
-        public Task AddTreeAsync(SortsOfTree sortsOfTree, long count, long plotId);
+        public Task AddTreeAsync(long sortId, long count, long plotId);
 
         /// <summary>
         /// Get tree info.
@@ -24,6 +24,6 @@ namespace Tree.Domain.ServiceInterfaces
         /// <summary>
         /// Delete tree.
         /// </summary>
-        public Task DeleteAsync(long count, long plotId, SortsOfTree sorts);
+        public Task DeleteAsync(long treeId, long plotId);
     }
 }

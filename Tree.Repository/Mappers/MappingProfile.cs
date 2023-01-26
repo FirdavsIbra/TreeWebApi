@@ -17,6 +17,14 @@ namespace Tree.Repository.Mappers
             // Configuration of plot mapping.
             CreateMap<IPlot, PlotDb>();
             CreateMap<PlotDb, Plot>();
+
+            // Configuration of tree type mapping.
+            CreateMap<ITreeType, TreeTypeDb>();
+            CreateMap<TreeTypeDb, TreeType>();
+
+            // Configruation of tree sort mapping.
+            CreateMap<ITreeSort, TreeSortDb>();
+            CreateMap<TreeSortDb, TreeSort>();
         }
     }
 }

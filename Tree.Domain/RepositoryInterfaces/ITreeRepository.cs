@@ -11,6 +11,11 @@ namespace Tree.Domain.RepositoryInterfaces
         public Task<ITree> GetByIdAsync(long id);
 
         /// <summary>
+        /// Add trees.
+        /// </summary>
+        public Task AddRangeAsync(IEnumerable<ITree> pupils);
+
+        /// <summary>
         /// Add tree.
         /// </summary>
         public Task AddAsync(ITree tree);
@@ -23,17 +28,12 @@ namespace Tree.Domain.RepositoryInterfaces
         /// <summary>
         /// Update tree.
         /// </summary>
-        public Task UpdateAsync(long id, ITree tree);
+        public Task UpdateAsync(ITree tree);
 
         /// <summary>
         /// Get all trees.
         /// </summary>
         public Task<ITree[]> GetAllAsync();
-
-        /// <summary>
-        /// Get tree by sort.
-        /// </summary>
-        public Task<ITree> GetBySortAsync(SortsOfTree sort);
 
         /// <summary>
         /// Get average height of tree.

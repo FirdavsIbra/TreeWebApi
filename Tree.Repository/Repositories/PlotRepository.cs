@@ -10,11 +10,9 @@ namespace Tree.Repository.Repositories
 {
     public sealed class PlotRepository : IPlotRepository
     {
-        private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
-        public PlotRepository(AppDbContext dbContext, IMapper mapper)
+        public PlotRepository(IMapper mapper)
         {
-            _dbContext = dbContext;
             _mapper = mapper;
         }
         
@@ -23,8 +21,9 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task AddAsync(IPlot plot)
         {
-            await _dbContext.Plots.AddAsync(_mapper.Map<PlotDb>(plot));
-            await _dbContext.SaveChangesAsync();
+            await using var dbContext = new AppDbContext();
+            await dbContext.Plots.AddAsync(_mapper.Map<PlotDb>(plot));
+            await dbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -32,12 +31,14 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task DeleteAsync(long id)
         {
-            var plot = await _dbContext.Plots.FirstOrDefaultAsync(x => x.Id == id);
+            await using var dbContext = new AppDbContext();
+
+            var plot = await dbContext.Plots.FirstOrDefaultAsync(x => x.Id == id);
 
             if (plot is not null)
             {
-                _dbContext.Plots.Remove(plot);
-                await _dbContext.SaveChangesAsync();
+                dbContext.Plots.Remove(plot);
+                await dbContext.SaveChangesAsync();
             }
         }
 
@@ -46,7 +47,9 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task<IPlot[]> GetAllAsync()
         {
-            return await _dbContext.Plots.Select(g => _mapper.Map<Plot>(g)).ToArrayAsync();
+            await using var dbContext = new AppDbContext();
+
+            return await dbContext.Plots.Select(g => _mapper.Map<Plot>(g)).ToArrayAsync();
         }
 
         /// <summary>
@@ -54,7 +57,9 @@ namespace Tree.Repository.Repositories
         /// </summary>
         public async Task<IPlot> GetByIdAsync(long id)
         {
-            var plot = await _dbContext.Plots.FirstOrDefaultAsync(x => x.Id == id);
+            await using var dbContext = new AppDbContext();
+
+            var plot = await dbContext.Plots.FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<Plot>(plot);
         }
@@ -62,15 +67,17 @@ namespace Tree.Repository.Repositories
         /// <summary>
         /// Update plot.
         /// </summary>
-        public async Task UpdateAsync(long id, IPlot plot)
+        public async Task UpdateAsync(IPlot plot)
         {
-            var plotDb = await _dbContext.Plots.FirstOrDefaultAsync(x => x.Id == id);
+            await using var dbContext = new AppDbContext();
+
+            var plotDb = await dbContext.Plots.FirstOrDefaultAsync(x => x.Id == plot.Id);
             if (plotDb is null)
-                throw new Exception("Tree not found!");
+                throw new Exception("Plot not found!");
 
-            _dbContext.Plots.Update(_mapper.Map(plot, plotDb));
+            dbContext.Plots.Update(_mapper.Map(plot, plotDb));
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
     }
 }
