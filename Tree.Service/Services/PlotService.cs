@@ -8,11 +8,9 @@ namespace Tree.Service.Services
     public sealed class PlotService : IPlotService
     {
         private readonly IPlotRepository _plotRepository;
-        private readonly ITreeRepository _treeRepository;
-        public PlotService(IPlotRepository plotRepository, ITreeRepository treeRepository)
+        public PlotService(IPlotRepository plotRepository)
         {
             _plotRepository = plotRepository;
-            _treeRepository = treeRepository;
         }
 
         /// <summary>
@@ -57,6 +55,18 @@ namespace Tree.Service.Services
                 throw new Exception("Plot not found!");
 
             await _plotRepository.UpdateAsync(plotDto);
+        }
+
+        /// <summary>
+        /// Get plot by id.
+        /// </summary>
+        public async Task<IPlot> GetByIdAsync(long id)
+        {
+            var plot = await _plotRepository.GetByIdAsync(id);
+            if (plot is null)
+                throw new Exception("Plot not found!");
+
+            return plot;
         }
     }
 }

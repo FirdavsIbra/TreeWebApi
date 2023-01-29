@@ -1,4 +1,5 @@
-﻿using Tree.Domain.ModelInterfaces.Base;
+﻿using Tree.Domain.ModelInterfaces;
+using Tree.Domain.ModelInterfaces.Base;
 
 namespace Tree.Repository.BusinessModels
 {
@@ -13,25 +14,11 @@ namespace Tree.Repository.BusinessModels
         /// Gets or sets sort of tree.
         /// </summary>
         public long TreeSortId { get; internal set; }
-
-        /// <summary>
-        /// Gets or sets height of tree in metre.
-        /// </summary>
-        public double HeightInMetre { get; internal set; }
-
-        /// <summary>
-        /// Gets or sets ocupying area of the tree.
-        /// </summary>
-        public double Square { get; internal set; }
-
-        /// <summary>
-        /// Gets or sets begining year of the harvest.
-        /// </summary>
-        public double BeginingOfTheHarvestInY { get; internal set; }
-
+        public ITreeSort TreeSort { get; internal set; }
         /// <summary>
         /// Gets or sets plot of tree.
         /// </summary>
         public long PlotId { get; set; }
+
     }
 }

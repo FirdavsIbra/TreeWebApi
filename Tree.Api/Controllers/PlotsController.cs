@@ -27,7 +27,7 @@ namespace Tree.Api.Controllers
         /// <summary>
         /// Get all plots.
         /// </summary>
-        [HttpGet("get")]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
             return Ok(await _plotService.GetAllAsync());
@@ -43,11 +43,23 @@ namespace Tree.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Update plot.
+        /// </summary>
         [HttpPut("update")]
         public async Task<IActionResult> UpdateAsync([FromQuery] PlotDto plotDto)
         {
             await _plotService.UpdateAsync(plotDto);
             return Ok();
+        }
+
+        /// <summary>
+        /// Get plot by id.
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(long id)
+        {
+            return Ok(await _plotService.GetByIdAsync(id));
         }
     }
 }

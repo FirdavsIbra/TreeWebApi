@@ -23,5 +23,10 @@ namespace Tree.Domain.ServiceInterfaces
         /// Update plot.
         /// </summary>
         public Task UpdateAsync(IPlot plot);
+
+        /// <summary>
+        /// Get plot by id.
+        /// </summary>
+        public Task<IPlot> GetByIdAsync(long id);
     }
 }

@@ -11,11 +11,9 @@ namespace Tree.Repository.Repositories
     public sealed class TreeRepository : ITreeRepository
     {
         private readonly IMapper _mapper;
-        private readonly ITreeSortRepository _treeSortRepository;
-        public TreeRepository(IMapper mapper, ITreeSortRepository treeSortRepository)
+        public TreeRepository(IMapper mapper)
         {
             _mapper = mapper;
-            _treeSortRepository = treeSortRepository;
         }
 
         /// <summary>
@@ -62,8 +60,20 @@ namespace Tree.Repository.Repositories
         public async Task<ITree[]> GetAllAsync()
         {
             await using var dbContext = new AppDbContext();
+            var configuration = new MapperConfiguration(cfg =>
+                                                        {
+                                                            cfg.CreateMap<ITree, TreeDb>()
+                                                                .ForPath(t => t.TreeSort.BeginingOfTheHarvestInY, it => it.MapFrom(c => c.TreeSort.BeginingOfTheHarvestInY))
+                                                                .ForPath(t => t.TreeSort.HeightInMetre, it => it.MapFrom(c => c.TreeSort.HeightInMetre))
+                                                                .ForPath(t => t.TreeSort.Square, it => it.MapFrom(c => c.TreeSort.Square));
+                                                            cfg.CreateMap<TreeDb, BusinessModels.Tree>()
+                                                                .ForPath(d => d.TreeSort.BeginingOfTheHarvestInY, opt => opt.MapFrom(c => c.TreeSort.BeginingOfTheHarvestInY))
+                                                                .ForPath(d => d.TreeSort.HeightInMetre, opt => opt.MapFrom(c => c.TreeSort.HeightInMetre))
+                                                                .ForPath(d => d.TreeSort.Square, opt => opt.MapFrom(c => c.TreeSort.Square));
+                                                        });
 
-            return await dbContext.Trees.ProjectTo<BusinessModels.Tree>(_mapper.ConfigurationProvider)
+            //configuration.AssertConfigurationIsValid();
+            return await dbContext.Trees.Include(x => x.TreeSort).ProjectTo<BusinessModels.Tree>(configuration)
                                         .AsNoTracking()
                                         .ToArrayAsync();
         }
@@ -124,7 +134,7 @@ namespace Tree.Repository.Repositories
             if (!trees.Any())
                 return 0;
 
-            return await trees.MaxAsync(t => t.TreeSort.BeginingOfTheHarvestInY);
+            return await trees.DefaultIfEmpty().MaxAsync(t => t.TreeSort.BeginingOfTheHarvestInY);
         }
 
         /// <summary>

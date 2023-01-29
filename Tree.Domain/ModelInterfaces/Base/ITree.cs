@@ -1,4 +1,6 @@
-﻿namespace Tree.Domain.ModelInterfaces.Base
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace Tree.Domain.ModelInterfaces.Base
 {
     public interface ITree
     {
@@ -11,6 +13,7 @@
         /// Gets id of sort tree.
         /// </summary>
         public long TreeSortId { get; }
+        public ITreeSort TreeSort { get; }
 
         /// <summary>
         /// Gets or sets id of plot.

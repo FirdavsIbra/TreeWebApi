@@ -12,6 +12,10 @@ namespace Tree.Service.Services
         {
             _treeTypeRepository = treeTypeRepository;
         }
+
+        /// <summary>
+        /// Add type of tree.
+        /// </summary>
         public async Task AddAsync(string name)
         {
             ITreeType treeType = new TreeTypeDto()
@@ -22,24 +26,36 @@ namespace Tree.Service.Services
             await _treeTypeRepository.AddAsync(treeType);
         }
 
-        public Task DeleteAsync(long id)
+        /// <summary>
+        /// Delete type of tree by id.
+        /// </summary>
+        public async Task DeleteAsync(long id)
         {
-            throw new NotImplementedException();
+            await _treeTypeRepository.DeleteAsync(id);
         }
 
-        public Task<ITreeType[]> GetAllAsync()
+        /// <summary>
+        /// Get all types of tree.
+        /// </summary>
+        public async Task<ITreeType[]> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _treeTypeRepository.GetAllAsync();
         }
 
-        public Task<ITreeType> GetByIdAsync(long id)
+        /// <summary>
+        /// Get type of tree by id.
+        /// </summary>
+        public async Task<ITreeType> GetByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            return await _treeTypeRepository.GetByIdAsync(id);
         }
 
-        public Task UpdateAsync(ITreeType type)
+        /// <summary>
+        /// Update type of tree.
+        /// </summary>
+        public async Task UpdateAsync(ITreeType type)
         {
-            throw new NotImplementedException();
+            await _treeTypeRepository.UpdateAsync(type);
         }
     }
 }

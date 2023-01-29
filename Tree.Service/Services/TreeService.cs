@@ -68,6 +68,18 @@ namespace Tree.Service.Services
         }
 
         /// <summary>
+        /// Get tree by id.
+        /// </summary>
+        public async Task<ITree> GetByIdAsync(long id)
+        {
+            var tree = await _treeRepository.GetByIdAsync(id);
+            if (tree is null)
+                throw new Exception("Tree not found!");
+
+            return tree;
+        }
+
+        /// <summary>
         /// Get tree info.
         /// </summary>
         public async Task<ITreeCalculation> GetTreeInfoAsync(long plotId)

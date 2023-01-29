@@ -22,7 +22,8 @@ namespace Tree.Repository.Repositories
         public async Task AddAsync(IPlot plot)
         {
             await using var dbContext = new AppDbContext();
-            await dbContext.Plots.AddAsync(_mapper.Map<PlotDb>(plot));
+            var mappedPlot = _mapper.Map<PlotDb>(plot);
+            await dbContext.Plots.AddAsync(mappedPlot);
             await dbContext.SaveChangesAsync();
         }
 

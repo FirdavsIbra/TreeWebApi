@@ -24,5 +24,10 @@ namespace Tree.Domain.ServiceInterfaces
         /// Delete tree.
         /// </summary>
         public Task DeleteAsync(long treeId, long plotId);
+
+        /// <summary>
+        /// Get tree by id.
+        /// </summary>
+        public Task<ITree> GetByIdAsync(long id);
     }
 }

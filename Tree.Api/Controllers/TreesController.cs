@@ -50,5 +50,14 @@ namespace Tree.Api.Controllers
             await _treeService.DeleteAsync(treeId, plotId);
             return Ok();
         }
+
+        /// <summary>
+        /// Get tree by id.
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(long id)
+        {
+            return Ok(await _treeService.GetByIdAsync(id));
+        }
     }
 }

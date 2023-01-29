@@ -13,7 +13,10 @@ namespace Tree.Service.Services
             _treeSortRepository = treeSortRepository;
             _treeTypeRepository = treeTypeRepository;
         }
-
+        
+        /// <summary>
+        /// Add sort of tree.
+        /// </summary>
         public async Task AddAsync(ITreeSort sort)
         {
             var type = await _treeTypeRepository.GetByIdAsync(sort.TreeTypeId);
@@ -24,24 +27,42 @@ namespace Tree.Service.Services
 
         }
 
-        public Task DeleteAsync(long id)
+        /// <summary>
+        /// Delete sort of tree by id.
+        /// </summary>
+        public async Task DeleteAsync(long id)
         {
-            throw new NotImplementedException();
+            await _treeSortRepository.DeleteAsync(id);
         }
 
-        public Task<ITreeSort[]> GetAllAsync()
+        /// <summary>
+        /// Get all sorts of tree.
+        /// </summary>
+        public async Task<ITreeSort[]> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _treeSortRepository.GetAllAsync();
         }
 
-        public Task<ITreeSort> GetByIdAsync(long id)
+        /// <summary>
+        /// Get sort of tree by id.
+        /// </summary>
+        public async Task<ITreeSort> GetByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            var treeSort = await _treeSortRepository.GetByIdAsync(id);
+            if (treeSort is null)
+                throw new Exception("Sort of tree not found!");
+
+            return treeSort;
         }
 
-        public Task UpdateAsync(ITreeSort sort)
+        /// <summary>
+        /// Update sort of tree.
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public async Task UpdateAsync(ITreeSort sort)
         {
-            throw new NotImplementedException();
+            await _treeSortRepository.UpdateAsync(sort);
         }
     }
 }

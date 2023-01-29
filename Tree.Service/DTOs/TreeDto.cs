@@ -1,4 +1,5 @@
-﻿using Tree.Domain.ModelInterfaces.Base;
+﻿using Tree.Domain.ModelInterfaces;
+using Tree.Domain.ModelInterfaces.Base;
 
 namespace Tree.Service.DTOs
 {
@@ -13,10 +14,12 @@ namespace Tree.Service.DTOs
         /// Gets or sets id of tree sort.
         /// </summary>
         public long TreeSortId { get; set; }
+        public ITreeSort TreeSort { get; set; }
 
         /// <summary>
         /// Gets or sets id of plot.
         /// </summary>
         public long PlotId { get; set; }
+
     }
 }
