@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Tree.DBCodeFirst.DbContexts;
 using Tree.DBCodeFirst.Entities;
@@ -60,20 +61,10 @@ namespace Tree.Repository.Repositories
         public async Task<ITree[]> GetAllAsync()
         {
             await using var dbContext = new AppDbContext();
-            var configuration = new MapperConfiguration(cfg =>
-                                                        {
-                                                            cfg.CreateMap<ITree, TreeDb>()
-                                                                .ForPath(t => t.TreeSort.BeginingOfTheHarvestInY, it => it.MapFrom(c => c.TreeSort.BeginingOfTheHarvestInY))
-                                                                .ForPath(t => t.TreeSort.HeightInMetre, it => it.MapFrom(c => c.TreeSort.HeightInMetre))
-                                                                .ForPath(t => t.TreeSort.Square, it => it.MapFrom(c => c.TreeSort.Square));
-                                                            cfg.CreateMap<TreeDb, BusinessModels.Tree>()
-                                                                .ForPath(d => d.TreeSort.BeginingOfTheHarvestInY, opt => opt.MapFrom(c => c.TreeSort.BeginingOfTheHarvestInY))
-                                                                .ForPath(d => d.TreeSort.HeightInMetre, opt => opt.MapFrom(c => c.TreeSort.HeightInMetre))
-                                                                .ForPath(d => d.TreeSort.Square, opt => opt.MapFrom(c => c.TreeSort.Square));
-                                                        });
 
-            //configuration.AssertConfigurationIsValid();
-            return await dbContext.Trees.Include(x => x.TreeSort).ProjectTo<BusinessModels.Tree>(configuration)
+            var cfg = ConfigureMapping();
+
+            return await dbContext.Trees.Include(x => x.TreeSort).ProjectToType<BusinessModels.Tree>(cfg)
                                         .AsNoTracking()
                                         .ToArrayAsync();
         }
@@ -85,9 +76,11 @@ namespace Tree.Repository.Repositories
         {
             await using var dbContext = new AppDbContext();
 
-            var tree = await dbContext.Trees.FirstOrDefaultAsync(x => x.Id == id);
+            var cfg = ConfigureMapping();
 
-            return _mapper.Map<BusinessModels.Tree>(tree);
+            return await dbContext.Trees.Include(t => t.TreeSort)
+                                            .ProjectToType<BusinessModels.Tree>(cfg)
+                                            .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         /// <summary>
@@ -151,5 +144,16 @@ namespace Tree.Repository.Repositories
 
             return await trees.SumAsync(t => t.TreeSort.Square);
         }
+
+        private TypeAdapterConfig ConfigureMapping()
+        {
+            var config = new TypeAdapterConfig();
+            config.NewConfig<ITree, TreeDb>()
+                .Map(dest => dest.TreeSort.BeginingOfTheHarvestInY, src => src.TreeSort.BeginingOfTheHarvestInY)
+                .Map(dest => dest.TreeSort.HeightInMetre, src => src.TreeSort.HeightInMetre)
+                .Map(dest => dest.TreeSort.Square, src => src.TreeSort.Square);
+            return config;
+        }
+
     }
 }
